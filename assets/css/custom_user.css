@@ -1,0 +1,45 @@
+.main_back{
+	background : url('../images_user/banner_bg.jpg');
+	height:700px;
+	width: 100%;
+	background-repeat: no-repeat;
+}
+.back_for_all{
+	background : url('../images_user/form_box1.jpg');
+	height:200px;
+	width: 100%;
+	background-repeat: no-repeat;
+}
+.content_home{
+	padding: 30px 600px 5px 50px;
+	text-align: justify;
+}
+.golden{
+	color: #f8bf2b;
+}
+.tab_style_single{
+	margin-top: 80px;
+	padding: 30px;
+	color: #fff;
+}
+.tab_style_main{
+	margin-top: -260px;
+	padding: 30px;
+	color: #fff;
+}
+.nav{
+	color: #fff !important;
+}
+.nav > li > a{
+	color: #f8bf2b !important;	
+}
+.nav > li > a:hover{
+	background-color: #f8bf2b !important;	
+	color: #fff !important;
+}
+.search_down{
+	margin-top: 30px;
+}
+.detail_search{
+	color: #000;
+}
