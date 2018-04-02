@@ -372,11 +372,26 @@ $(function() {
   $('#submitbtn').click(function(e){
     e.preventDefault();
     $print = false;
+    var submit_flag = 1;
     $("#form_").attr("action", save_form_action);
-    $('#form_').submit();
+
+    $(".quantity").each(function() {
+      if ($(this).val() == "") {
+        alert("Enter the Quantity Value!");
+        $(this).focus();
+        submit_flag = 0;
+      }
+    });
+
+    if(submit_flag == 1)
+    {
+      $('#form_').submit();
+    }
+  
   });
   
   $('form#form_').submit(function(){
+    
       if ($print == false) {
           var form = $(this);
           if ($cansend == true)
@@ -443,37 +458,8 @@ var currencyRate=1;
   //===============================================product row ===================================
   
   $("#product_id").change(function(event) {
-    // $(".product_id_div").addClass('hidden');
-    if ($(".quantity").length == 0) {
-      alert("qunaty = 0");
-      $("#done_btn").removeClass('hidden');
-        console.log(currencyUnit);
-        console.log(currencyRate);
-        product_id=$("#product_id option:selected").val();
-        if(product_id!=""){
-          // $("#product_id option:selected").remove();
-          // $('#product_id option[value=""]').attr('selected','');
-          $.post('<?php echo base_url('common/Ajax/quotationlist_ajax/get_product_row') ?>', {  billing_id: product_id,currencyRate:currencyRate}, function(data, textStatus, xhr) {
-            var rowCount = $('#product_table tbody tr').length;
-            $("#product_table tbody").append("<tr id='"+product_id+"'><td class='hidden'></td><input type='hidden' name='product_row_id[]' value='"+ product_id +"'><td class='sno'>"+(rowCount+1)+"</td>"+data+"</tr>");
-            $("#product_id option:selected").remove();
-            //<input type='hidden' name='product_row_id[]' value='"+ product_id +"'>
-            get_amount(product_id);
-            $("#quantity_"+product_id).focus().val('');
-            $("#discount_"+product_id).val('');
-          });
-        }    
-    }
-    $(".quantity").each(function() {
-      if ($(this).val() == "") {
-        alert("Enter the Quantity Value!");
-        setTimeout(function() { $(this).focus(); }, 100);
-        return;
-      }
-      else
-      {
-        alert("qunaty != 0");
-        $("#done_btn").removeClass('hidden');
+
+     $("#done_btn").removeClass('hidden');
         console.log(currencyUnit);
         console.log(currencyRate);
         product_id=$("#product_id option:selected").val();
@@ -489,9 +475,7 @@ var currencyRate=1;
         $("#quantity_"+product_id).focus().val('');
         $("#discount_"+product_id).val('');
           });
-        }    
-      }
-    });
+        }  
 
   });
 
@@ -508,8 +492,17 @@ function delete_row(data) {
 
 function oncheckquantity(){
   //alert("checking");
-  if ($('.quantity').val() == "") {
-      alert("Null");
-  }
+      
+  $(".quantity").each(function() {
+    if ($(this).val() == "") {
+      alert("Enter the Quantity Value!");
+      $(this).focus();
+    }
+    else
+    {
+      
+    }
+  });
+
 }
 </script>

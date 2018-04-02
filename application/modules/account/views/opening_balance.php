@@ -138,6 +138,25 @@
 $(function() {
   //=========================customer details ====================================================
 
+  $('#submitbtn').click(function(e){
+    e.preventDefault();
+    
+    var submit_flag = 1;
+    $(".amount").each(function() {
+      if ($(this).val() == "") {
+        alert("Please Enter the Amount Value!");
+        $(this).focus();
+        submit_flag = 0;
+      }
+    });
+
+    if(submit_flag == 1)
+    {
+      $('#form_').submit();
+    }
+  
+  });
+
   $cansend = false;
   $(".my_date").inputmask("9999/99/99",{ "placeholder": "yyyy/mm/dd" });
     $('form#form_').submit(function(){
@@ -178,7 +197,6 @@ $(function() {
             return false;
   })
 
-
   $("#customer_id").change(function(event) {
     customer_id=$("#customer_id option:selected").val();
     if(customer_id!=""){
@@ -193,148 +211,129 @@ $(function() {
         $(".my_date").focus();
       });
       // get_sub_total();
-  }
+    }
   });
 
-  $("td input[name^='data[transaction_date]'],td input[name^='data[doc_reference]'],td input[name^='data[amount]']").focusout(function() {
-    if(!$(this).val())
-    {
-      
-      $(this).addClass("custom_error_block");
-      $(this).focus();
-    }
-    else
-    {
-      $(this).removeClass("custom_error_block");
-    }
-  });
- 
   $("#input_credit_note").click(function(evernt) {
-    
-    $("#flag_text").html("Mode: Credit Note");
-    var numrows = $("form#form_").find("input[name^='data[transaction_date]']").length;
-    console.log(numrows);
-    var append_str_credit = '<tr id="row">' 
-                          +'<td class="form-group error_block">'
-                          + '<input type="text" required="" class="form-control my_date" name="data[transaction_date]['
-                         // + numrows
-                          + ']">'
-                          + '</td>'
-                          + '<td class="form-group error_block">'
-                          + '<input type="text" required="" class="form-control" name="data[doc_reference]['
-                          //+ numrows
-                          + ']">'
-                          + '</td>'
-                          + '<td>'
-                          +  '<input type="text" class="form-control" name="data[remarks]['
-                          //+ numrows
-                          + ']">'
-                          + '</td>'
-                          + '<td class="form-group error_block">'
-                          +  '<input type="text" required="" class="form-control" name="data[amount]['
-                          //+ numrows
-                          + ']">'
-                          + '</td>'
-                          + '<td class="hidden">'
-                          + '<input type="text" readonly class="form-control" name="data[sign]['
-                          //+ numrows
-                          + ']" value="-">'
-                          + '</td>'
-                          + '<td>'
-                          + '<button class="form-control btn-warning" onclick="delete_row(this)">Delete</button>'
-                          + '</td>'
-                          + '</tr>';
-    
-    $("#open_table tbody").append(append_str_credit);
-    $(".my_date").inputmask("9999/99/99",{ "placeholder": "yyyy/mm/dd" });
-    $(".my_date").focus();
 
-    $("td input[name^='data[transaction_date]'],td input[name^='data[doc_reference]'],td input[name^='data[amount]']").focusout(function() {
-      if(!$(this).val())
+    var check_flag = 1;
+
+    $(".amount").each(function(){
+      if($(this).val() == "")
       {
-        
+        alert("Please Enter the Amount Value!");
         $(this).focus();
-        $(this).addClass("custom_error_block");
-      }
-      else
-      {
-        $(this).removeClass("custom_error_block");
+        check_flag = 0;
+        return;
       }
     });
 
-    $("td input[name^='data[amount]']").focusout(function() {
-      if(!$(this).val())
-      {
-        alert("sdfs");
-        $(this).focus();
-        // $(this).addClass("custom_error_block");
-      }
-      else
-      {
-        $(this).removeClass("custom_error_block");
-      }
-    });
-
+    if(check_flag == 1)
+    {
+      $("#flag_text").html("Mode: Credit Note");
+      var numrows = $("form#form_").find("input[name^='data[transaction_date]']").length;
+      console.log(numrows);
+      var append_str_credit = '<tr id="row">' 
+                            +'<td class="form-group error_block">'
+                            + '<input type="text" required="" class="form-control my_date" name="data[transaction_date]['
+                          // + numrows
+                            + ']">'
+                            + '</td>'
+                            + '<td class="form-group error_block">'
+                            + '<input type="text" required="" class="form-control" name="data[doc_reference]['
+                            //+ numrows
+                            + ']">'
+                            + '</td>'
+                            + '<td>'
+                            +  '<input type="text" class="form-control" name="data[remarks]['
+                            //+ numrows
+                            + ']">'
+                            + '</td>'
+                            + '<td class="form-group error_block">'
+                            +  '<input type="text" required="" class="amount form-control" name="data[amount]['
+                            //+ numrows
+                            + ']">'
+                            + '</td>'
+                            + '<td class="hidden">'
+                            + '<input type="text" readonly class="form-control" name="data[sign]['
+                            //+ numrows
+                            + ']" value="-">'
+                            + '</td>'
+                            + '<td>'
+                            + '<button class="form-control btn-warning" onclick="delete_row(this)">Delete</button>'
+                            + '</td>'
+                            + '</tr>';
+      
+      $("#open_table tbody").append(append_str_credit);
+      $(".my_date").inputmask("9999/99/99",{ "placeholder": "yyyy/mm/dd" });
+      $(".my_date").focus();
+    }
+    
   }); 
+
   $("#input_another_entry").click(function(evernt) {
-    
-    $("#flag_text").html("Mode: Invoice Entry");
-    var numrows = $("form#form_").find("input[name^='data[transaction_date]']").length;
 
-    console.log(numrows);
-    var append_str_entry = '<tr id="row">' 
-                          +'<td class="form-group error_block">'
-                          + '<input type="text" required="" class="form-control my_date" name="data[transaction_date]['
-                          //+ numrows
-                          + ']">'
-                          + '</td>'
-                          + '<td class="form-group error_block">'
-                          + '<input type="text" required="" class="form-control" name="data[doc_reference]['
-                          //+ numrows
-                          + ']">'
-                          + '</td>'
-                          + '<td>'
-                          +  '<input type="text" class="form-control" name="data[remarks]['
-                          //+ numrows
-                          + ']">'
-                          + '</td>'
-                          + '<td class="form-group error_block">'
-                          +  '<input type="text" required="" class="form-control" name="data[amount]['
-                          //+ numrows
-                          + ']">'
-                          + '</td>'
-                          + '<td class="hidden">'
-                          + '<input type="text" readonly class="form-control" name="data[sign]['
-                          //+ numrows
-                          + ']" value="+">'
-                          + '</td>'
-                          + '<td>'
-                          + '<button class="form-control btn-warning" onclick="delete_row(this)">Delete</button>'
-                          + '</td>'
-                          + '</tr>';
+    var check_flag = 1;
 
-    $("#open_table tbody").append(append_str_entry);
-    //console.log(index_add);
-    $(".my_date").inputmask("9999/99/99",{ "placeholder": "yyyy/mm/dd" });
-    $(".my_date").focus();
+    $('.amount').each(function(){
 
-    $("td input[name^='data[transaction_date]'],td input[name^='data[doc_reference]'],td input[name^='data[amount]']").focusout(function() {
-      if(!$(this).val())
+      if($(this).val() == "")
       {
+        alert("Please Enter the Amount Value!");
         $(this).focus();
-        $(this).addClass("custom_error_block");
+        check_flag = 0;
+        return;
       }
-      else
-      {
-        $(this).removeClass("custom_error_block");
-      }
+      
     });
+    if(check_flag == 1)
+    {
+      $("#flag_text").html("Mode: Invoice Entry");
+      var numrows = $("form#form_").find("input[name^='data[transaction_date]']").length;
+
+      console.log(numrows);
+      var append_str_entry = '<tr id="row">' 
+                            +'<td class="form-group error_block">'
+                            + '<input type="text" required="" class="form-control my_date" name="data[transaction_date]['
+                            //+ numrows
+                            + ']">'
+                            + '</td>'
+                            + '<td class="form-group error_block">'
+                            + '<input type="text" required="" class="form-control" name="data[doc_reference]['
+                            //+ numrows
+                            + ']">'
+                            + '</td>'
+                            + '<td>'
+                            +  '<input type="text" class="form-control" name="data[remarks]['
+                            //+ numrows
+                            + ']">'
+                            + '</td>'
+                            + '<td class="form-group error_block">'
+                            +  '<input type="text" required="" class="amount form-control" name="data[amount]['
+                            //+ numrows
+                            + ']">'
+                            + '</td>'
+                            + '<td class="hidden">'
+                            + '<input type="text" readonly class="form-control" name="data[sign]['
+                            //+ numrows
+                            + ']" value="+">'
+                            + '</td>'
+                            + '<td>'
+                            + '<button class="form-control btn-warning" onclick="delete_row(this)">Delete</button>'
+                            + '</td>'
+                            + '</tr>';
+
+      $("#open_table tbody").append(append_str_entry);
+      //console.log(index_add);
+      $(".my_date").inputmask("9999/99/99",{ "placeholder": "yyyy/mm/dd" });
+      $(".my_date").focus();
+    }
+    
   });
+
 });
 
-
 function delete_row(data) {
-    
     $(data).parents("tr").remove();
 }
 
